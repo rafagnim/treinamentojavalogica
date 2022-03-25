@@ -6,31 +6,19 @@ import java.util.*;
 
 public class RedeEstacoes {
 
-    private Estacao se;
-    private Estacao paulista;
-    private Estacao brigadeiro;
-    private Estacao fariaLima;
-    private Estacao saoLuis;
-    private Estacao ipiranga;
-    private Estacao pinheiros;
-    private Estacao barrafunda;
-    private Estacao aguarasa;
     protected static Map<String, Estacao> estacaoMap = new HashMap<>();
-    private Estacao origem;
-    private Estacao destino;
-    List<String[]> retorno;
 
     public void setUpEstacoes() {
 
-        se = new Estacao("Estação Sé");
-        paulista = new Estacao("Estação Paulista");
-        brigadeiro = new Estacao("Estação Brigadeiro");
-        fariaLima = new Estacao("Estação Faria Lima");
-        saoLuis = new Estacao("Estação São Luis");
-        ipiranga = new Estacao("Estação Ipiranga");
-        pinheiros = new Estacao("Estação Pinheiros");
-        barrafunda = new Estacao("Estação Barra Funda");
-        aguarasa = new Estacao("Estação Água Rasa");
+        Estacao se = new Estacao("Estação Sé");
+        Estacao paulista = new Estacao("Estação Paulista");
+        Estacao brigadeiro = new Estacao("Estação Brigadeiro");
+        Estacao fariaLima = new Estacao("Estação Faria Lima");
+        Estacao saoLuis = new Estacao("Estação São Luis");
+        Estacao ipiranga = new Estacao("Estação Ipiranga");
+        Estacao pinheiros = new Estacao("Estação Pinheiros");
+        Estacao barrafunda = new Estacao("Estação Barra Funda");
+        Estacao aguarasa = new Estacao("Estação Água Rasa");
 
         se.setV1(paulista);
         se.setV2(aguarasa);
@@ -73,18 +61,19 @@ public class RedeEstacoes {
         estacaoMap.put("Estação Pinheiros", pinheiros);
         estacaoMap.put("Estação Barra Funda", barrafunda);
         estacaoMap.put("Estação Água Rasa", aguarasa);
+
     }
 
     public Mono<String[]> retornaMenorRota(String e1, String e2) {
 
-        retorno = new ArrayList<>();
+        List<String[]> retorno = new ArrayList<>();
 
-        origem = estacaoMap.get(e1);
-        destino = estacaoMap.get(e2);
+        Estacao origem = estacaoMap.get(e1);
+        Estacao destino = estacaoMap.get(e2);
 
         int profundidade = 0;
         String strDivs = "";
-        tracaRota(origem, strDivs, profundidade);
+        tracaRota(origem, strDivs, profundidade, retorno, origem, destino);
 
         String[] r = new String[1];
         Integer tamanho = Integer.MAX_VALUE;
@@ -98,18 +87,21 @@ public class RedeEstacoes {
         return rotas;
     }
 
-    private void tracaRota(Estacao atual, String strDivs, int profundidade) {
+    private void tracaRota(Estacao atual, String strDivs, int profundidade, List<String[]> listaRetorno, Estacao o, Estacao d) {
+        Estacao origem = o;
+        Estacao destino = d;
+        List<String[]> retorno = listaRetorno;
         profundidade++;
         if (profundidade < 5 && !atual.getNome().equals(destino.getNome())) {
             strDivs += atual.getNome() + "-";
             if (atual.getV1() != null) {
-                tracaRota(atual.getV1(), strDivs, profundidade);
+                tracaRota(atual.getV1(), strDivs, profundidade, retorno, origem, destino);
             }
             if (atual.getV2() != null) {
-                tracaRota(atual.getV2(), strDivs, profundidade);
+                tracaRota(atual.getV2(), strDivs, profundidade, retorno, origem, destino);
             }
             if (atual.getV3() != null) {
-                tracaRota(atual.getV3(), strDivs, profundidade);
+                tracaRota(atual.getV3(), strDivs, profundidade, retorno, origem, destino);
             }
         } else {
             strDivs += destino.getNome();
