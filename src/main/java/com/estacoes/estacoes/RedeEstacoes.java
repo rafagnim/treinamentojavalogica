@@ -14,11 +14,11 @@ public class RedeEstacoes {
     private Estacao ipiranga;
     private Estacao pinheiros;
     private Estacao barrafunda;
-    private Estacao brigadeiro1;
-    protected static Map<String, Estacao> estacaoMap;
+    private Estacao aguarasa;
+    protected static Map<String, Estacao> estacaoMap = new HashMap<>();
     private Estacao origem;
     private Estacao destino;
-    private List<String[]> retorno = new ArrayList<>();
+    List<String[]> retorno;
 
     public void setUpEstacoes() {
 
@@ -30,14 +30,14 @@ public class RedeEstacoes {
         ipiranga = new Estacao("Estação Ipiranga");
         pinheiros = new Estacao("Estação Pinheiros");
         barrafunda = new Estacao("Estação Barra Funda");
-        brigadeiro1 = new Estacao("Estação Brigadeiro1");
+        aguarasa = new Estacao("Estação Água Rasa");
 
         se.setV1(paulista);
-        se.setV2(brigadeiro1);
+        se.setV2(aguarasa);
         se.setV3(fariaLima);
 
         paulista.setV1(brigadeiro);
-        paulista.setV2(brigadeiro1);
+        paulista.setV2(aguarasa);
         paulista.setV3(se);
 
         brigadeiro.setV1(paulista);
@@ -51,11 +51,11 @@ public class RedeEstacoes {
         barrafunda.setV3(pinheiros);
 
         ipiranga.setV1(barrafunda);
-        ipiranga.setV2(brigadeiro1);
+        ipiranga.setV2(aguarasa);
 
-        brigadeiro1.setV1((paulista));
-        brigadeiro1.setV2(se);
-        brigadeiro1.setV3(ipiranga);
+        aguarasa.setV1((paulista));
+        aguarasa.setV2(se);
+        aguarasa.setV3(ipiranga);
 
         fariaLima.setV1(se);
         fariaLima.setV2(pinheiros);
@@ -72,10 +72,12 @@ public class RedeEstacoes {
         estacaoMap.put("Estação Ipiranga", ipiranga);
         estacaoMap.put("Estação Pinheiros", pinheiros);
         estacaoMap.put("Estação Barra Funda", barrafunda);
-        estacaoMap.put("Estação Brigadeiro1", brigadeiro1);
+        estacaoMap.put("Estação Água Rasa", aguarasa);
     }
 
     public Mono<String[]> retornaMenorRota(String e1, String e2) {
+
+        retorno = new ArrayList<>();
 
         origem = estacaoMap.get(e1);
         destino = estacaoMap.get(e2);

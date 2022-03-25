@@ -32,7 +32,7 @@ public class RedesEstacoesTest {
         StepVerifier.create(rede.retornaMenorRota("Estação Sé", "Estação Ipiranga"))
                 .assertNext(rota -> {
                     assertEquals("Estação Sé", rota[0]);
-                    assertEquals("Estação Brigadeiro1", rota[1]);
+                    assertEquals("Estação Água Rasa", rota[1]);
                     assertEquals("Estação Ipiranga", rota[2]);
                 })
                 .verifyComplete();
@@ -55,7 +55,7 @@ public class RedesEstacoesTest {
         StepVerifier.create(rede.retornaMenorRota("Estação Sé", "Estação Barra Funda"))
                 .assertNext(rota -> {
                     assertEquals("Estação Sé", rota[0]);
-                    assertEquals("Estação Brigadeiro1", rota[1]);
+                    assertEquals("Estação Água Rasa", rota[1]);
                     assertEquals("Estação Ipiranga", rota[2]);
                     assertEquals("Estação Barra Funda", rota[3]);
                 })
@@ -80,7 +80,7 @@ public class RedesEstacoesTest {
                 .assertNext(rota -> {
                     assertEquals("Estação Brigadeiro", rota[0]);
                     assertEquals("Estação Paulista", rota[1]);
-                    assertEquals("Estação Brigadeiro1", rota[2]);
+                    assertEquals("Estação Água Rasa", rota[2]);
                     assertEquals("Estação Ipiranga", rota[3]);
                 })
                 .verifyComplete();
