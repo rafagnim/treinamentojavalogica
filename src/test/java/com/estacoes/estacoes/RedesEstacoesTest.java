@@ -1,5 +1,6 @@
 package com.estacoes.estacoes;
 
+import com.estacoes.estacoes.entities.RedeEstacoes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

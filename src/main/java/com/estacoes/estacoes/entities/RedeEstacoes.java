@@ -1,12 +1,13 @@
-package com.estacoes.estacoes;
+package com.estacoes.estacoes.entities;
 
+import com.estacoes.estacoes.entities.Estacao;
 import reactor.core.publisher.Mono;
 
 import java.util.*;
 
 public class RedeEstacoes {
 
-    protected static Map<String, Estacao> estacaoMap = new HashMap<>();
+    public static Map<String, Estacao> estacaoMap = new HashMap<>();
 
     public void setUpEstacoes() {
 
@@ -70,7 +71,6 @@ public class RedeEstacoes {
 
         Estacao origem = estacaoMap.get(e1);
         Estacao destino = estacaoMap.get(e2);
-
         int profundidade = 0;
         String strDivs = "";
         tracaRota(origem, strDivs, profundidade, retorno, origem, destino);

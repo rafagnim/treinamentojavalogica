@@ -1,4 +1,4 @@
-package com.estacoes.estacoes;
+package com.estacoes.estacoes.entities;
 
 public class Estacao {
 
