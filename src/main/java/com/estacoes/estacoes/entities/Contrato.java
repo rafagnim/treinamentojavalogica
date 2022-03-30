@@ -2,6 +2,7 @@ package com.estacoes.estacoes.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_contrato")
@@ -13,6 +14,8 @@ public class Contrato {
     private String cpf_cnpj;
     @NotNull
     private Double vl_contrato;
+    @OneToMany
+    private List<Contrato> itens;
 
     public Contrato() {
     }
@@ -45,5 +48,13 @@ public class Contrato {
 
     public void setVl_contrato(Double vl_contrato) {
         this.vl_contrato = vl_contrato;
+    }
+
+    public List<Contrato> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Contrato> itens) {
+        this.itens = itens;
     }
 }

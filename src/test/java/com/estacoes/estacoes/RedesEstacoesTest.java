@@ -12,11 +12,6 @@ public class RedesEstacoesTest {
 
     RedeEstacoes rede = new RedeEstacoes();
 
-    @BeforeEach
-    void setUp() {
-        rede.setUpEstacoes();
-    }
-
     @Test
     void testRetornaMenorRotaVizinhas() {
 

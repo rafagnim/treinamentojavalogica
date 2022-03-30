@@ -1,16 +1,22 @@
 package com.estacoes.estacoes.controllers;
 
 import com.estacoes.estacoes.entities.Contrato;
+import com.estacoes.estacoes.entities.ItemContrato;
+import com.estacoes.estacoes.entities.Mensagem;
 import com.estacoes.estacoes.services.ContratoService;
 import com.estacoes.estacoes.services.ValidaCNPJ;
 import com.estacoes.estacoes.services.ValidaCPF;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import reactor.core.publisher.Mono;
 
-@RestController
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Controller
 @RequestMapping("contrato")
 public class ContratoController {
 
@@ -20,20 +26,29 @@ public class ContratoController {
         this.contratoService = contratoService;
     }
 
-    @PostMapping
-    public Mono<Contrato> saveContrato(@RequestBody Contrato contrato) {
-        Integer vl_contrato = Math.toIntExact(Math.round(contrato.getVl_contrato()));
-        return Mono.just(contrato)
-                .filter(e -> ValidaCPF.valida(e.getCpf_cnpj()) || ValidaCNPJ.valida(e.getCpf_cnpj()))
-                .switchIfEmpty(Mono.error(new IllegalArgumentException("Informe um Cpf ou CNPJ válido")))
-                .filter(e -> validaValor(e))
-                .switchIfEmpty(Mono.error(new IllegalArgumentException("Informe valores com até duas casas decimais")))
-                .flatMap(e-> contratoService.saveContrato(e)
-                );
+    @RequestMapping(path = "cadastrar")
+    public ModelAndView consultarEstacoes() {
+        ModelAndView mv = new ModelAndView("contratos/cadastro.html");
+        mv.addObject("contrato", new Contrato());
+        return mv;
     }
 
-    private boolean validaValor(Contrato e) {
-        Double valor = e.getVl_contrato() * 100;
-        return valor - valor.intValue() == 0 ? true : false;
+    @RequestMapping(path = "cadastrar", method = RequestMethod.POST)
+    public ModelAndView cadastrarContrato(Contrato contrato) {
+
+        ModelAndView mv = new ModelAndView("contratos/cadastro.html");
+
+        mv.addObject("obj", Mono.just(contrato)
+                .filter(e -> ValidaCPF.valida(e.getCpf_cnpj()) || ValidaCNPJ.valida(e.getCpf_cnpj()))
+                .flatMap(e-> contratoService.saveContrato(e))
+                .map(c -> {
+                    return new Mensagem("Contrato " + c.getCpf_cnpj() + " R$ " + c.getVl_contrato() + " cadastrado com sucesso");
+                })
+                .defaultIfEmpty(new Mensagem("Informe um CPF ou CNPJ válido"))
+                .flatMapIterable(i -> {
+                    return Arrays.asList(i);
+                })
+                .toIterable());
+        return mv;
     }
 }

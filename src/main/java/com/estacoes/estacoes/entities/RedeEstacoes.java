@@ -9,6 +9,10 @@ public class RedeEstacoes {
 
     public static Map<String, Estacao> estacaoMap = new HashMap<>();
 
+    public RedeEstacoes() {
+        this.setUpEstacoes();
+    }
+
     public void setUpEstacoes() {
 
         Estacao se = new Estacao("Estação Sé");
