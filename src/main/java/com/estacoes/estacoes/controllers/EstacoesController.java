@@ -5,38 +5,36 @@ import com.estacoes.estacoes.entities.RedeEstacoes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping(path = "estacoes")
 public class EstacoesController {
 
     RedeEstacoes rede = new RedeEstacoes();
 
-    @RequestMapping(path = "consultar")
-    public ModelAndView consultarEstacoes() {
-        ModelAndView mv = new ModelAndView("estacoes/consulta.html");
-        mv.addObject("estacoes", new EstacaoConsultaDTO());
-        mv.addObject("listaEstacoes", RedeEstacoes.estacaoMap.keySet());
-        return mv;
-    }
 
-    @RequestMapping(path = "rota", method = RequestMethod.POST)
-    public ModelAndView exibeMenorRota(EstacaoConsultaDTO estacoes) {
-        ModelAndView mv = new ModelAndView("estacoes/rota.html");
-        mv.addObject("rota", Mono.just(estacoes)
-                .flatMap(e -> {
-                    return rede.retornaMenorRota(e.getEstacaoOrigem(), e.getEstacaoDestino());
-                })
-                .flatMapIterable(i -> {
-                    return Arrays.asList(i);
-                }).toIterable());
-        return mv;
-    }
+//
+//    @RequestMapping(path = "rota", method = RequestMethod.POST)
+//    public ModelAndView exibeMenorRota(EstacaoConsultaDTO estacoes) {
+//        ModelAndView mv = new ModelAndView("estacoes/rota.html");
+//        mv.addObject("rota", Mono.just(estacoes)
+//                .flatMap(e -> {
+//                    return rede.retornaMenorRota(e.getEstacaoOrigem(), e.getEstacaoDestino());
+//                })
+//                .flatMapIterable(i -> {
+//                    return Arrays.asList(i);
+//                }).toIterable());
+//        return mv;
+//    }
 
-    @GetMapping(path = "rotas")
-    public Mono<String[]> broadcast(@RequestBody String[] estacoes) {
+    @PostMapping(path = "rotas")
+    public Mono<String[]> rotas(@RequestBody String[] estacoes) {
+        System.out.println("Requisição");
         return Mono.just(estacoes)
                 .filter(e -> e.length == 2)
                 .switchIfEmpty(errorIllegalArgumentExceptionNumberStations())
@@ -47,6 +45,11 @@ public class EstacoesController {
                     return r;
                         }
                 );
+    }
+
+    @GetMapping(path = "listaestacoes")
+    public Mono<Set<String>> listaEstacoes() {
+        return Mono.just(RedeEstacoes.estacaoMap.keySet());
     }
 
     private <T> Mono<T> errorIllegalArgumentExceptionNumberStations() {

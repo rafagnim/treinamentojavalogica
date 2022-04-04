@@ -10,17 +10,16 @@ public class ItemContrato {
     private Integer id;
     private String id_duplicata;
     private Double vl_duplicata;
-    @ManyToOne
-    private Contrato c;
+    private Integer contrato_id;
 
     public ItemContrato() {
     }
 
-    public ItemContrato(Integer id, String id_duplicata, Double vl_duplicata, Contrato c) {
+    public ItemContrato(Integer id, String id_duplicata, Double vl_duplicata, Integer contrato_id) {
         this.id = id;
         this.id_duplicata = id_duplicata;
         this.vl_duplicata = vl_duplicata;
-        this.c = c;
+        this.contrato_id = contrato_id;
     }
 
     public Integer getId() {
@@ -47,11 +46,11 @@ public class ItemContrato {
         this.vl_duplicata = vl_duplicata;
     }
 
-    public Contrato getC() {
-        return c;
+    public Integer getContrato_id() {
+        return contrato_id;
     }
 
-    public void setC(Contrato c) {
-        this.c = c;
+    public void setContrato_id(Integer contrato_id) {
+        this.contrato_id = contrato_id;
     }
 }
