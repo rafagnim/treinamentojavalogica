@@ -33,15 +33,19 @@ public class ContratoController {
 
     @PutMapping(path = "atualizaritens/{id}")
     public Mono<Contrato> atualizarContrato(@RequestBody ItemContrato item, @PathVariable Integer id) {
-        System.out.println("Fui chamado");
         item.setContrato_id(id);
         return this.contratoService.upDateItensContrato(id, item);
     }
 
+    @PutMapping(path = "excluiitem/{id}")
+    public Mono<Contrato> excluiItemContrato(@PathVariable Integer id) {
+        return itemService.getById(id)
+                .flatMap(i -> contratoService.excluiItensContrato(i.getContrato_id(), i));
+    }
+
     @GetMapping(path = "consultar/{id}")
     public Mono<Contrato> getById(@PathVariable Integer id) {
-        var retorno =  contratoService.findById(id);
-        return retorno;
+        return contratoService.findById(id);
     }
 
     @GetMapping(path = "listar/{cpf_cnpj}")
@@ -55,7 +59,6 @@ public class ContratoController {
 
     @GetMapping(path = "valida/{cpf_cnpj}")
     public Mono<Boolean> validaID(@PathVariable String cpf_cnpj) {
-        System.out.println("Aqui");
         return Mono.just(cpf_cnpj)
                 .map(e -> {
                     return (ValidaCPF.valida(cpf_cnpj) || ValidaCNPJ.valida(cpf_cnpj));

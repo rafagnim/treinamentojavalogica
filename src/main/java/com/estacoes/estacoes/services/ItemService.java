@@ -18,4 +18,12 @@ public class ItemService {
     public Mono<ItemContrato> saveItem (ItemContrato i) {
         return Mono.just(itemRepository.save(i));
     }
+
+    public Mono<ItemContrato> getById(Integer itemId) {
+        return Mono.just(itemRepository.getById(itemId));
+    }
+
+    public void excluir (Integer itemId) {
+        itemRepository.deleteById(itemId);
+    }
 }

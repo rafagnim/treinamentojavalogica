@@ -1,5 +1,7 @@
 package com.estacoes.estacoes.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -14,7 +16,7 @@ public class Contrato {
     private String cpf_cnpj;
     @NotNull
     private Double vl_contrato;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "contrato_id")
     private List<ItemContrato> item;
 
