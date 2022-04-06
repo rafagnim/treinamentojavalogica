@@ -54,14 +54,4 @@ public class ItemContrato {
     public void setContrato_id(Integer contrato_id) {
         this.contrato_id = contrato_id;
     }
-
-    @Override
-    public String toString() {
-        return "ItemContrato{" +
-                "id=" + id +
-                ", id_duplicata='" + id_duplicata + '\'' +
-                ", vl_duplicata=" + vl_duplicata +
-                ", contrato_id=" + contrato_id +
-                '}';
-    }
 }

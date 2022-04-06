@@ -1,7 +1,5 @@
 package com.estacoes.estacoes.services;
 
-import org.hibernate.event.spi.SaveOrUpdateEvent;
-
 public class ValidaCNPJ {
 
     public static boolean valida (String cnpj) {
@@ -38,7 +36,6 @@ public class ValidaCNPJ {
             if (digitos == primeiroDigito * 10 + segundoDigito) {
                 return true;
             }
-
         }catch (Exception e) {
             return false;
         }

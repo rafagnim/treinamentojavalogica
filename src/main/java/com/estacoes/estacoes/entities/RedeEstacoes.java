@@ -1,8 +1,6 @@
 package com.estacoes.estacoes.entities;
 
-import com.estacoes.estacoes.entities.Estacao;
 import reactor.core.publisher.Mono;
-
 import java.util.*;
 
 public class RedeEstacoes {
