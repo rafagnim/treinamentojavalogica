@@ -27,10 +27,10 @@ public class ContratoService {
     public Mono<Contrato> upDateItensContrato (Integer id, ItemContrato item) {
         return this.findById(id)
                 .map (c -> {
-                    var itens = c.getItem();
+                    var itens = c.getItensContrato();
                     itens.add(item);
                     c.setVl_contrato(c.getVl_contrato() + item.getVl_duplicata());
-                    c.setItem(itens);
+                    c.setItensContrato(itens);
                     var contrato = contratoRepository.save(c);
                     return contrato;
                 });
@@ -39,12 +39,12 @@ public class ContratoService {
     public Mono<Contrato> excluiItensContrato (Integer contratoId, ItemContrato item) {
         return this.findById(contratoId)
                 .flatMap(c -> {
-                    var itens = c.getItem();
+                    var itens = c.getItensContrato();
                     var itensRestantes = itens.stream().filter(i -> {
                         return i.getId() != item.getId();
                     }).collect(Collectors.toList());
                     c.setVl_contrato(c.getVl_contrato() - item.getVl_duplicata());
-                    c.setItem(itensRestantes);
+                    c.setItensContrato(itensRestantes);
                     itemService.excluir(item.getId());
                     return this.saveContrato(c);
                 });

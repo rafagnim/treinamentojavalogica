@@ -24,6 +24,6 @@ public class ItemController {
     public Flux<ItemContrato> listarItens(@PathVariable Integer id) {
 
         return contratoService.findById(id)
-                .map(c -> c.getItem()).flatMapIterable(i -> i);
+                .map(c -> c.getItensContrato()).flatMapIterable(i -> i);
     }
 }

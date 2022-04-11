@@ -16,18 +16,18 @@ public class Contrato {
     private String cpf_cnpj;
     @NotNull
     private Double vl_contrato;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contrato_id")
-    private List<ItemContrato> item;
+    public List<ItemContrato> itensContrato;
 
     public Contrato() {
     }
 
-    public Contrato(Integer id, String cpf_cnpj, Double vl_contrato, List<ItemContrato> item) {
+    public Contrato(Integer id, String cpf_cnpj, Double vl_contrato, List<ItemContrato> itensContrato) {
         this.id = id;
         this.cpf_cnpj = cpf_cnpj;
         this.vl_contrato = vl_contrato;
-        this.item = item;
+        this.itensContrato = itensContrato;
     }
 
     public Integer getId() {
@@ -54,11 +54,11 @@ public class Contrato {
         this.vl_contrato = vl_contrato;
     }
 
-    public List<ItemContrato> getItem() {
-        return item;
+    public List<ItemContrato> getItensContrato() {
+        return itensContrato;
     }
 
-    public void setItem(List<ItemContrato> item) {
-        this.item = item;
+    public void setItensContrato(List<ItemContrato> itensContrato) {
+        this.itensContrato = itensContrato;
     }
 }

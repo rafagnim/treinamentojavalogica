@@ -27,7 +27,7 @@ public class ContratoController {
         var retorno =  Mono.just(contrato)
                 .filter(e -> ValidaCPF.valida(e.getCpf_cnpj()) || ValidaCNPJ.valida(e.getCpf_cnpj()))
                 .flatMap(e-> contratoService.saveContrato(e))
-                .switchIfEmpty(Mono.error(new IllegalArgumentException("Informe um CPF ou CNPJ válido")));
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Informe um CPF ou CNPJ válido.")));
         return retorno;
     }
 
@@ -52,7 +52,7 @@ public class ContratoController {
     public Flux<Contrato> listarContratos(@PathVariable String cpf_cnpj) {
         return Mono.just(cpf_cnpj)
                 .filter(e -> ValidaCPF.valida(cpf_cnpj) || ValidaCNPJ.valida(cpf_cnpj))
-                .switchIfEmpty(Mono.error(new IllegalArgumentException("Informe um CPF ou CNPJ válido")))
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Informe um CPF ou CNPJ válido.")))
                 .concatWith(Mono.empty())
                 .flatMap(e -> contratoService.getContratoByCpfCnpj(cpf_cnpj));
     }
