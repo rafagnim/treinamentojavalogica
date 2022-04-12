@@ -1,9 +1,8 @@
 package com.estacoes.estacoes.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -15,6 +14,10 @@ public class Contrato {
     private Integer id;
     private String cpf_cnpj;
     @NotNull
+    @Column(name = "dt_vencimento")
+    private LocalDate dataVencimento;
+
+    @NotNull
     private Double vl_contrato;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contrato_id")
@@ -23,9 +26,10 @@ public class Contrato {
     public Contrato() {
     }
 
-    public Contrato(Integer id, String cpf_cnpj, Double vl_contrato, List<ItemContrato> itensContrato) {
+    public Contrato(Integer id, String cpf_cnpj, LocalDate dataVencimento, Double vl_contrato, List<ItemContrato> itensContrato) {
         this.id = id;
         this.cpf_cnpj = cpf_cnpj;
+        this.dataVencimento = dataVencimento;
         this.vl_contrato = vl_contrato;
         this.itensContrato = itensContrato;
     }
@@ -60,5 +64,13 @@ public class Contrato {
 
     public void setItensContrato(List<ItemContrato> itensContrato) {
         this.itensContrato = itensContrato;
+    }
+
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 }

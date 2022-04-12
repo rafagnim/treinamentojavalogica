@@ -24,6 +24,7 @@ public class ContratoController {
 
     @PostMapping(path = "cadastrar")
     public Mono<Contrato> cadastraContrato(@RequestBody Contrato contrato) {
+        Contrato c1 = contrato;
         var retorno =  Mono.just(contrato)
                 .filter(e -> ValidaCPF.valida(e.getCpf_cnpj()) || ValidaCNPJ.valida(e.getCpf_cnpj()))
                 .flatMap(e-> contratoService.saveContrato(e))

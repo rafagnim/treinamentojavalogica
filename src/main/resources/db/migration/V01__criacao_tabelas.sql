@@ -1,6 +1,7 @@
 create table tb_contrato (
 id integer unsigned auto_increment primary key not null,
 cpf_cnpj varchar(14) not null,
+dt_vencimento date not null,
 vl_contrato decimal(15,2) not null);
 
 create index idx_contrato on tb_contrato (cpf_cnpj);
@@ -9,6 +10,7 @@ create table tb_contrato_item (
 id integer unsigned auto_increment primary key not null,
 id_duplicata varchar(30) not null,
 vl_duplicata decimal(12,2) not null,
+dt_vencimento date not null,
 contrato_id integer unsigned,
 foreign key (contrato_id) references tb_contrato(id) );
 
