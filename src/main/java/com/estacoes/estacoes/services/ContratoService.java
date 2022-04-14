@@ -24,31 +24,31 @@ public class ContratoService {
         return Mono.just(contratoRepository.save(c));
     }
 
-    public Mono<Contrato> upDateItensContrato (Integer id, ItemContrato item) {
-        return this.findById(id)
-                .map (c -> {
-                    var itens = c.getItensContrato();
-                    itens.add(item);
-                    c.setVl_contrato(c.getVl_contrato() + item.getVl_duplicata());
-                    c.setItensContrato(itens);
-                    var contrato = contratoRepository.save(c);
-                    return contrato;
-                });
-    }
+//    public Mono<Contrato> upDateItensContrato (Integer id, ItemContrato item) {
+//        return this.findById(id)
+//                .map (c -> {
+//                    var itens = c.getItensContrato();
+//                    itens.add(item);
+//                    c.setVl_contrato(c.getVl_contrato() + item.getVl_duplicata());
+//                    c.setItensContrato(itens);
+//                    var contrato = contratoRepository.save(c);
+//                    return contrato;
+//                });
+//    }
 
-    public Mono<Contrato> excluiItensContrato (Integer contratoId, ItemContrato item) {
-        return this.findById(contratoId)
-                .flatMap(c -> {
-                    var itens = c.getItensContrato();
-                    var itensRestantes = itens.stream().filter(i -> {
-                        return i.getId() != item.getId();
-                    }).collect(Collectors.toList());
-                    c.setVl_contrato(c.getVl_contrato() - item.getVl_duplicata());
-                    c.setItensContrato(itensRestantes);
-                    itemService.excluir(item.getId());
-                    return this.saveContrato(c);
-                });
-    }
+//    public Mono<Contrato> excluiItensContrato (Integer contratoId, ItemContrato item) {
+//        return this.findById(contratoId)
+//                .flatMap(c -> {
+//                    var itens = c.getItensContrato();
+//                    var itensRestantes = itens.stream().filter(i -> {
+//                        return i.getId() != item.getId();
+//                    }).collect(Collectors.toList());
+//                    c.setVl_contrato(c.getVl_contrato() - item.getVl_duplicata());
+//                    c.setItensContrato(itensRestantes);
+//                    itemService.excluir(item.getId());
+//                    return this.saveContrato(c);
+//                });
+//    }
 
     public Mono<Contrato> findById (Integer id) {
         return Mono.justOrEmpty(contratoRepository.findById(id).get());
