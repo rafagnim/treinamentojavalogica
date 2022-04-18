@@ -50,7 +50,7 @@ public class ContratoService {
 //                });
 //    }
 
-    public Mono<Contrato> findById (Integer id) {
+    public Mono<Contrato> findById (Long id) {
         return Mono.justOrEmpty(contratoRepository.findById(id).get());
     }
 

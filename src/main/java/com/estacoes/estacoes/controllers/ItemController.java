@@ -21,7 +21,7 @@ public class ItemController {
     }
 
     @RequestMapping(path = "listar/{id}")
-    public Flux<ItemContrato> listarItens(@PathVariable Integer id) {
+    public Flux<ItemContrato> listarItens(@PathVariable Long id) {
 
         return contratoService.findById(id)
                 .map(c -> c.getItensContrato()).flatMapIterable(i -> i);

@@ -12,8 +12,10 @@ public class Emprestimo {
     private String cpf_cnpj;
     private BigDecimal valor;
     private Integer parcelas;
+    private Integer idade;
+
     private BigDecimal taxaMensal;
-    private String taxaAnual;
+    private BigDecimal taxaAnual;
     private List<Parcela> parcelasResultado;
 
     public Emprestimo() {
@@ -27,9 +29,12 @@ public class Emprestimo {
         this.parcelasResultado = parcelasResultado;
     }
     public void calculaParcelas() {
-        this.taxaAnual = ComponentConfig.TAX_PATTERN;
-        Double taxaAnual = Double.parseDouble(this.taxaAnual);
-        this.taxaMensal = BigDecimal.valueOf((Math.pow((1 + (taxaAnual / 100)), 1D / 12D)) - 1).setScale(10, RoundingMode.HALF_EVEN);
+        this.taxaAnual = BigDecimal.valueOf(Double.parseDouble(ComponentConfig.getTAX_PATTERN()));
+
+        this.taxaAnual  = this.taxaRisco(this.taxaAnual);
+
+        this.taxaMensal = BigDecimal.valueOf((Math.pow((1 + (taxaAnual.doubleValue() / 100)), 1D / 12D)) - 1).setScale(10, RoundingMode.HALF_EVEN);
+
         BigDecimal.valueOf(1);
         BigDecimal um = new BigDecimal("1");
         BigDecimal operador = taxaMensal.add(um).pow(parcelas);
@@ -89,11 +94,28 @@ public class Emprestimo {
         this.taxaMensal = taxaMensal;
     }
 
-    public String getTaxaAnual() {
+    public BigDecimal getTaxaAnual() {
         return taxaAnual;
     }
 
-    public void setTaxaAnual(String taxaAnual) {
+    public void setTaxaAnual(BigDecimal taxaAnual) {
         this.taxaAnual = taxaAnual;
+    }
+
+    public BigDecimal taxaRisco(BigDecimal taxaNormal) {
+
+        this.idade = 25; //TODO
+
+        if(idade < 18) {
+            throw new RuntimeException("Empréstimo exclusivo a parir de 18 anos");
+        } else if (idade < 19) {
+           return taxaNormal.multiply(BigDecimal.valueOf(1.05));
+        } else if (idade < 46) {
+            return taxaNormal.multiply(BigDecimal.valueOf(1.02));
+        } else if (idade < 69) {
+            return taxaNormal.multiply(BigDecimal.valueOf(1.01));
+        } else {
+            return taxaNormal;
+        }
     }
 }

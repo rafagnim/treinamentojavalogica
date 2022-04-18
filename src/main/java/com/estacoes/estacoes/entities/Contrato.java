@@ -2,6 +2,7 @@ package com.estacoes.estacoes.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,14 +12,14 @@ public class Contrato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String cpf_cnpj;
     @NotNull
     @Column(name = "dt_vencimento")
     private LocalDate dataVencimento;
 
     @NotNull
-    private Double vl_contrato;
+    private BigDecimal vl_contrato;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "contrato_id")
     public List<ItemContrato> itensContrato;
@@ -26,7 +27,7 @@ public class Contrato {
     public Contrato() {
     }
 
-    public Contrato(Integer id, String cpf_cnpj, LocalDate dataVencimento, Double vl_contrato, List<ItemContrato> itensContrato) {
+    public Contrato(Long id, String cpf_cnpj, LocalDate dataVencimento, BigDecimal vl_contrato, List<ItemContrato> itensContrato) {
         this.id = id;
         this.cpf_cnpj = cpf_cnpj;
         this.dataVencimento = dataVencimento;
@@ -34,11 +35,11 @@ public class Contrato {
         this.itensContrato = itensContrato;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,11 +51,11 @@ public class Contrato {
         this.cpf_cnpj = cpf_cnpj;
     }
 
-    public Double getVl_contrato() {
+    public BigDecimal getVl_contrato() {
         return vl_contrato;
     }
 
-    public void setVl_contrato(Double vl_contrato) {
+    public void setVl_contrato(BigDecimal vl_contrato) {
         this.vl_contrato = vl_contrato;
     }
 

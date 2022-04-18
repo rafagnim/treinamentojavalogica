@@ -1,8 +1,8 @@
 package com.estacoes.estacoes.controllers;
 
+import com.estacoes.estacoes.config.ComponentConfig;
 import com.estacoes.estacoes.entities.Contrato;
 import com.estacoes.estacoes.entities.Emprestimo;
-import com.estacoes.estacoes.entities.ItemContrato;
 import com.estacoes.estacoes.services.ContratoService;
 import com.estacoes.estacoes.services.ItemService;
 import com.estacoes.estacoes.services.ValidaCNPJ;
@@ -33,20 +33,8 @@ public class ContratoController {
         return retorno;
     }
 
-//    @PutMapping(path = "atualizaritens/{id}")
-//    public Mono<Contrato> atualizarContrato(@RequestBody ItemContrato item, @PathVariable Integer id) {
-//        item.setContrato_id(id);
-//        return this.contratoService.upDateItensContrato(id, item);
-//    }
-
-//    @PutMapping(path = "excluiitem/{id}")
-//    public Mono<Contrato> excluiItemContrato(@PathVariable Integer id) {
-//        return itemService.getById(id)
-//                .flatMap(i -> contratoService.excluiItensContrato(i.getContrato_id(), i));
-//    }
-
     @GetMapping(path = "consultar/{id}")
-    public Mono<Contrato> getById(@PathVariable Integer id) {
+    public Mono<Contrato> getById(@PathVariable Long id) {
         return contratoService.findById(id);
     }
 
@@ -75,5 +63,10 @@ public class ContratoController {
                             System.out.println(e.getTaxaAnual());
                               return e;
                         });
+    }
+
+    @GetMapping(path= "taxas")
+    public Mono<String> obterTaxa() {
+        return Mono.just(ComponentConfig.getTAX_PATTERN());
     }
 }

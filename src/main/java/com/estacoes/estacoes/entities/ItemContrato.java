@@ -1,7 +1,7 @@
 package com.estacoes.estacoes.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -9,17 +9,17 @@ import java.time.LocalDate;
 public class ItemContrato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String id_duplicata;
     @Column(name = "dt_vencimento")
     private LocalDate dataVencimento;
-    private Double vl_duplicata;
+    private BigDecimal vl_duplicata;
     private Integer contrato_id;
 
     public ItemContrato() {
     }
 
-    public ItemContrato(Integer id, String id_duplicata, LocalDate dataVencimento, Double vl_duplicata, Integer contrato_id) {
+    public ItemContrato(Long id, String id_duplicata, LocalDate dataVencimento, BigDecimal vl_duplicata, Integer contrato_id) {
         this.id = id;
         this.id_duplicata = id_duplicata;
         this.dataVencimento = dataVencimento;
@@ -27,11 +27,11 @@ public class ItemContrato {
         this.contrato_id = contrato_id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,11 +43,11 @@ public class ItemContrato {
         this.id_duplicata = id_duplicata;
     }
 
-    public Double getVl_duplicata() {
+    public BigDecimal getVl_duplicata() {
         return vl_duplicata;
     }
 
-    public void setVl_duplicata(Double vl_duplicata) {
+    public void setVl_duplicata(BigDecimal vl_duplicata) {
         this.vl_duplicata = vl_duplicata;
     }
 

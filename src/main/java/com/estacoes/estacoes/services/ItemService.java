@@ -17,11 +17,11 @@ public class ItemService {
         return Mono.just(itemRepository.save(i));
     }
 
-    public Mono<ItemContrato> getById(Integer itemId) {
+    public Mono<ItemContrato> getById(Long itemId) {
         return Mono.just(itemRepository.getById(itemId));
     }
 
-    public void excluir (Integer itemId) {
+    public void excluir (Long itemId) {
         itemRepository.deleteById(itemId);
     }
 }
