@@ -58,10 +58,9 @@ public class ContratoController {
     @PostMapping(path = "emprestimo")
     public Mono<Emprestimo> simulaEmprestimo(@RequestBody Emprestimo emprestimo) {
         return Mono.just(emprestimo)
-                .map(
+                .flatMap(
                         e -> {e.calculaParcelas();
-                            System.out.println(e.getTaxaAnual());
-                              return e;
+                            return contratoService.saveSimulacao(e);
                         });
     }
 

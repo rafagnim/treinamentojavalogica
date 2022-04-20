@@ -181,11 +181,7 @@ public class Emprestimo {
     }
 
     private BigDecimal taxaRisco(BigDecimal taxaNormal) {
-
         Integer idade = apuraIdade();
-
-        System.out.println(idade);
-
         if(idade < 18) {
             throw new RuntimeException("Empréstimo exclusivo a partir de 18 anos.");
         } else if (idade < 19) {
